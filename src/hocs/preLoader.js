@@ -1,9 +1,10 @@
 import React from 'react'
 import hoistStatics from 'hoist-non-react-statics'
 import { connect } from 'react-redux'
+import isFunction from 'lodash.isfunction'
 
 const defaults = {
-  initializer: null,
+  initializer: () => false,
   isLoading: () => false,
   hasError: () => false,
   LoadingComponent: () => null,
@@ -20,6 +21,14 @@ export default args => {
     ErrorComponent,
     wrapperDisplayName,
   } = { ...defaults, ...args }
+
+  if (!isFunction(initializer)) {
+    throw new Error(`initializer must to be a function, but now is ${typeof initializer}`)
+  } else if (!isFunction(isLoading)) {
+    throw new Error(`isLoading must to be a function, but now is ${typeof isLoading}`)
+  } else if (!isFunction(hasError)) {
+    throw new Error(`hasError must to be a function, but now is ${typeof hasError}`)
+  }
 
   const getComponentName = component => (
     component.displayName || component.name || 'Component'
