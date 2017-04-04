@@ -21,6 +21,8 @@ A Higher Order Component that helps to initialize data.
 * `wrapperDisplayName (type: String)`: 디버깅 할 때 표시될 display에 표시될 이름을 뜻합니다. 만약 값을 넘겨주지 않는다면 'withPreLoader'의 이름으로 표시됩니다.
 
 ## Example
+
+### es7 + decorator
 ```javascript
 import { preLoader } from 'redux-preloader'
 
@@ -44,4 +46,33 @@ const initializer = (props, nextProps, dispatch) => {
 class YourClass extends from React.Component {
   ...
 }
+
+export default YourClass
+```
+
+### otherwise
+```javascript
+import { preLoader } from 'redux-preloader'
+
+class YourClass extends from React.Component {
+  ...
+}
+
+const initializer = (props, nextProps, dispatch) => {
+  const id = selectn('id', props)
+  const nextId = selectn('id', nextProps)
+  if (id !== nextId) {
+    dispatch(/** Your async action **/)
+    return true
+  }
+  return false
+}
+
+export default preLoader({
+  initializer,
+  isLoading: (state, ownProps) => state.isFetching,
+  hasError: (state, ownProps) => state.hasError,
+  LoadingComponent: YourLoadingComponent,
+  ErrorComponent: YourErrorComponent,
+})(YourClass)
 ```
