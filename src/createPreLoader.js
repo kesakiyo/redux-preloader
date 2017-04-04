@@ -11,6 +11,10 @@ export default (defaults = {}) => {
 
   const emptyFunction = () => null
 
+  const objectMap = (obj = {}, state, ownProps) => (
+    Object.keys(obj).reduce((ret, key) => ({ ...ret, [key]: obj[key](state, ownProps)}), {})
+  )
+
   return args => {
     const initializer = args.initializer || emptyFunction
     const isLoading = args.isLoading || emptyFunction
@@ -31,6 +35,7 @@ export default (defaults = {}) => {
 
       @connect(
         (state, ownProps) => ({
+          ...objectMap(defaults.injectToProps, state, ownProps),
           isLoading: isLoading(state, ownProps),
           hasError: hasError(state, ownProps),
         })
