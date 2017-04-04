@@ -3,8 +3,8 @@ import hoistStatics from 'hoist-non-react-statics'
 import { connect } from 'react-redux'
 
 const defaults = {
-  preLoader: null,
-  preLoading: () => false,
+  initializer: null,
+  isLoading: () => false,
   hasError: () => false,
   LoadingComponent: () => null,
   ErrorComponent: () => null,
@@ -13,8 +13,8 @@ const defaults = {
 
 export default args => {
   const {
-    preLoader,
-    preLoading,
+    initializer,
+    isLoading,
     hasError,
     LoadingComponent,
     ErrorComponent,
@@ -29,11 +29,11 @@ export default args => {
 
     @connect(
       (state, ownProps) => ({
-        preLoading: preLoading(state, ownProps),
+        isLoading: isLoading(state, ownProps),
         hasError: hasError(state, ownProps),
       })
     )
-    class withPreLoader extends React.Component {
+    class preLoader extends React.Component {
       constructor() {
         super()
         this.state = {
@@ -42,15 +42,15 @@ export default args => {
       }
 
       componentWillMount() {
-        this.setState({ forceUnmount: preLoader(null, this.props, this.props.dispatch) })
+        this.setState({ forceUnmount: initializer(null, this.props, this.props.dispatch) })
       }
 
       componentWillReceiveProps(nextProps) {
-        this.setState({ forceUnmount: preLoader(this.props, nextProps, this.props.dispatch) })
+        this.setState({ forceUnmount: initializer(this.props, nextProps, this.props.dispatch) })
       }
 
       render() {
-        if (this.props.preLoading || this.state.forceUnmount) {
+        if (this.props.isLoading || this.state.forceUnmount) {
           return <LoadingComponent />
         } else if (this.props.hasError) {
           return <ErrorComponent />
@@ -59,8 +59,8 @@ export default args => {
       }
     }
 
-    withPreLoader.displayName = `${wrapperDisplayName}(${getComponentName(DecoratedComponent)})`
+    preLoader.displayName = `${wrapperDisplayName}(${getComponentName(DecoratedComponent)})`
 
-    return hoistStatics(withPreLoader, DecoratedComponent)
+    return hoistStatics(preLoader, DecoratedComponent)
   }
 }

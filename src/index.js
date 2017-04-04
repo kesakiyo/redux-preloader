@@ -1,3 +1,3 @@
-import withPreLoader from './hocs/withPreLoader'
+import preLoader from './hocs/preLoader'
 
-export { withPreLoader }
+export { preLoader }
