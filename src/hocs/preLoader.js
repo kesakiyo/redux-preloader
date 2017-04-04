@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 
 const defaults = {
   initializer: null,
-  preLoading: () => false,
+  isLoading: () => false,
   hasError: () => false,
   LoadingComponent: () => null,
   ErrorComponent: () => null,
@@ -14,7 +14,7 @@ const defaults = {
 export default args => {
   const {
     initializer,
-    preLoading,
+    isLoading,
     hasError,
     LoadingComponent,
     ErrorComponent,
@@ -29,7 +29,7 @@ export default args => {
 
     @connect(
       (state, ownProps) => ({
-        preLoading: preLoading(state, ownProps),
+        isLoading: isLoading(state, ownProps),
         hasError: hasError(state, ownProps),
       })
     )
@@ -50,7 +50,7 @@ export default args => {
       }
 
       render() {
-        if (this.props.preLoading || this.state.forceUnmount) {
+        if (this.props.isLoading || this.state.forceUnmount) {
           return <LoadingComponent />
         } else if (this.props.hasError) {
           return <ErrorComponent />
