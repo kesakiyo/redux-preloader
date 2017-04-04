@@ -43,7 +43,7 @@ const initializer = (props, nextProps, dispatch) => {
   LoadingComponent: YourLoadingComponent,
   ErrorComponent: YourErrorComponent,
 })
-class YourClass extends from React.Component {
+class YourClass extends React.Component {
   ...
 }
 
@@ -54,7 +54,7 @@ export default YourClass
 ```javascript
 import { preLoader } from 'redux-preloader'
 
-class YourClass extends from React.Component {
+class YourClass extends React.Component {
   ...
 }
 
