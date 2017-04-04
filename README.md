@@ -18,4 +18,4 @@ A Higher Order Component that helps to initialize data.
 
 * `ErrorComponent (type: Component)`: hasError가 true일 때 render될 컴포넌트 입니다. ```LoadingComponent```와 유사하게 동작합니다. 만약 값을 넘겨주지 않는다면 빈 화면이 출력됩니다.
 
-* wrapperDisplayName (type: String)`: 디버깅 할 때 표시될 display에 표시될 이름을 뜻합니다. 만약 값을 넘겨주지 않는다면 'withPreLoader'의 이름으로 표시됩니다.
+* `wrapperDisplayName (type: String)`: 디버깅 할 때 표시될 display에 표시될 이름을 뜻합니다. 만약 값을 넘겨주지 않는다면 'withPreLoader'의 이름으로 표시됩니다.
