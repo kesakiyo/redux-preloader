@@ -1,6 +1,6 @@
 {
   "name": "redux-preloader",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A Higher Order Component that helps to initialize data.",
   "main": "lib/index.js",
   "scripts": {
@@ -31,6 +31,7 @@
     "rimraf": "^2.6.1"
   },
   "dependencies": {
-    "hoist-non-react-statics": "^1.2.0"
+    "hoist-non-react-statics": "^1.2.0",
+    "lodash.isfunction": "^3.0.8"
   }
 }
