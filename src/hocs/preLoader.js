@@ -3,7 +3,7 @@ import hoistStatics from 'hoist-non-react-statics'
 import { connect } from 'react-redux'
 
 const defaults = {
-  preLoader: null,
+  initializer: null,
   preLoading: () => false,
   hasError: () => false,
   LoadingComponent: () => null,
@@ -13,7 +13,7 @@ const defaults = {
 
 export default args => {
   const {
-    preLoader,
+    initializer,
     preLoading,
     hasError,
     LoadingComponent,
@@ -33,7 +33,7 @@ export default args => {
         hasError: hasError(state, ownProps),
       })
     )
-    class withPreLoader extends React.Component {
+    class preLoader extends React.Component {
       constructor() {
         super()
         this.state = {
@@ -42,11 +42,11 @@ export default args => {
       }
 
       componentWillMount() {
-        this.setState({ forceUnmount: preLoader(null, this.props, this.props.dispatch) })
+        this.setState({ forceUnmount: initializer(null, this.props, this.props.dispatch) })
       }
 
       componentWillReceiveProps(nextProps) {
-        this.setState({ forceUnmount: preLoader(this.props, nextProps, this.props.dispatch) })
+        this.setState({ forceUnmount: initializer(this.props, nextProps, this.props.dispatch) })
       }
 
       render() {
@@ -59,8 +59,8 @@ export default args => {
       }
     }
 
-    withPreLoader.displayName = `${wrapperDisplayName}(${getComponentName(DecoratedComponent)})`
+    preLoader.displayName = `${wrapperDisplayName}(${getComponentName(DecoratedComponent)})`
 
-    return hoistStatics(withPreLoader, DecoratedComponent)
+    return hoistStatics(preLoader, DecoratedComponent)
   }
 }
