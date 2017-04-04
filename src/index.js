@@ -1,3 +1,5 @@
-import preLoader from './hocs/preLoader'
+import createPreLoader from './createPreLoader'
 
-export { preLoader }
+const preLoader = createPreLoader()
+
+export { createPreLoader, preLoader }
