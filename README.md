@@ -20,6 +20,18 @@ A Higher Order Component that helps to initialize data.
 
 * `wrapperDisplayName (type: String)`: 디버깅 할 때 표시될 display에 표시될 이름을 뜻합니다. 만약 값을 넘겨주지 않는다면 'withPreLoader'의 이름으로 표시됩니다.
 
+### createPreLoader(config: Object)
+> 기본으로 제공해주는 preLoader를 사용하는것도 좋지만 좀 더 커스터마이징 된 preLoader를 사용하고 싶을때도 있습니다. 이 때 사용할 수 있는 API입니다.
+이 API는 몇 가지 기본 설정을 가진 preLoader를 생성하는 함수입니다.
+
+#### Config properties
+* `DefaultLoadingComponent (type: Component)`: preLoader에서 LoadingComponent를 정해주지 않는다면 isLoading이 true일 때 기본으로 사용하게 될 컴포넌트입니다.
+ 
+* `DefaultErrorComponent (type: Component)`: preLoader에서 ErrorComponent를 정해주지 않는다면 hasError가 true일 때 기본으로 사용하게 될 컴포넌트 입니다
+
+* `injectToProps (type: Object => [key: String, value: Function])`: preLoader에서 initializer가 호출 될 때 Store에서 추가로 내려받고 싶은 정보가 있을 수 있습니다. 이 때 원하는 정보들을 Object에 명시해주면 됩니다. 
+Object의 key는 props로 내려줄 key를 의미합니다. Object의 value는 Selector function으로 Store에서 가져올 정보들을 의미합니다. 자세한 예제는 Example을 참고해주세요.
+
 ## Example
 
 ### es7 + decorator
@@ -50,7 +62,7 @@ class YourClass extends React.Component {
 export default YourClass
 ```
 
-### otherwise
+### es6
 ```javascript
 import { preLoader } from 'redux-preloader'
 
@@ -75,4 +87,41 @@ export default preLoader({
   LoadingComponent: YourLoadingComponent,
   ErrorComponent: YourErrorComponent,
 })(YourClass)
+```
+### createPreLoader + es7 + decorator
+```javascript
+import { createPreLoader } from 'redux-prealoder'
+
+const customPreLoader = createPreLoader({
+  DefaultLoadingComponent: YourDefaultLoadingComponent,
+  DefaultErrorComponent: YourDefaultErrorComponent,
+  injectToProps: {
+    socketStatus: (state, ownProps) => state.socketStatus
+  }
+})
+
+const initializer = (props, nextProps, dispatch) => {
+  // injectToProps에 socketStatus를 명시해줘서 initializer에서 사용이 가능합니다
+  const status = selectn('socketStatus', props)
+  const nextStatus = selectn('socketStatus', nextProps)
+  if (status !== nextStatus) {
+    dispatch(/** Your async action **/)
+    return true
+  }
+  return false
+}
+
+/*
+  DefaultLoadingComponent, DefaultErrorComponent를 설정해 줬기 때문에
+  따로 설정을 안해줘도 원하는 컴포넌트가 보입니다.
+  만약 Default가 아닌 다른 컴포넌트를 보여주고 싶다면 다른 컴포넌트를 명시해주시면 됩니다.
+*/
+@customPreLoader({
+  initializer,
+  isLoading: (state, ownProps) => state.isFetching,
+  hasError: (state, ownProps) => state.hasError,
+})
+class YourClass extends React.Component {
+  ...
+}
 ```
