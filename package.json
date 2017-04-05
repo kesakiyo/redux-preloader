@@ -1,6 +1,6 @@
 {
   "name": "redux-preloader",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "A Higher Order Component that helps to initialize data.",
   "main": "lib/index.js",
   "scripts": {
