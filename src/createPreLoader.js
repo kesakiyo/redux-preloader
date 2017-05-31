@@ -57,12 +57,11 @@ export default (defaults = {}) => {
         }
 
         renderErrorComponent() {
-          const { ErrorComponent } = this.props
           const isJSXComponent = ErrorComponent.prototype instanceof React.Component || ErrorComponent.prototype instanceof React.PureComponent
           if (isJSXComponent) {
             return <ErrorComponent />
           }
-          return ErrorComponent(props)
+          return ErrorComponent(this.props)
         }
 
         render() {
