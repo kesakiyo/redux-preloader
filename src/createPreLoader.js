@@ -36,6 +36,7 @@ export default (defaults = {}) => {
       @connect(
         (state, ownProps) => ({
           ...objectMap(defaults.injectToProps, state, ownProps),
+          ...objectMap(args.injectToProps, state, ownProps),
           isLoading: isLoading(state, ownProps),
           hasError: hasError(state, ownProps),
         })

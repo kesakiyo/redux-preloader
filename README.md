@@ -11,6 +11,9 @@ A Higher Order Component that helps to initialize data.
 #### Config properties
 * `initializer(props, nextProps, dispatch) (type: Function, return: Bool)`: ```willMount```나 ```willReceiveProps```때 호출됩니다. 이 때 사용자는 ```props```, ```nextProps```를 통해 원하는 상황에서 액션을 생성할 수 있습니다. 때때로 액션을 생성한 뒤 Selector를 통하지 않고 명시적으로 LoadingComponent를 보여주고 싶을 수 있습니다. 이 때 ```initializer```함수에서 ```true```를 반환 한다면 명시적로 현재 컴포넌트를 Loading컴포넌트로 변경할 수 있습니다. 이 외의 경우에는 ```false```를 반환하시면 됩니다. (willMount 일때는 props가 null로 들어옵니다.)
 
+* `injectToProps (type: Object => [key: String, value: Function])`: preLoader에서 initializer가 호출 될 때 Store에서 추가로 내려받고 싶은 정보가 있을 수 있습니다. 이 때 원하는 정보들을 Object에 명시해주면 됩니다. 
+Object의 key는 props로 내려줄 key를 의미합니다. Object의 value는 Selector function으로 Store에서 가져올 정보들을 의미합니다. 자세한 예제는 Example을 참고해주세요.
+
 * `isLoading(state, ownProps) (type: Function, return: Bool)`: LoadingComponent를 보여줄 상황을 결정하는 selector입니다. 해당 값이 true라면 LoadingComponent가 보여집니다. 기본 반환값은 false입니다.
 * `hasError(state, ownProps) (type: Function, return: Bool)`: ErrorComponent를 보여줄 상황을 결정하는 selector입니다. preLoading이 false일 경우 hasError를 판단합니다. 만약 preLoading이 항상 true라면 ErrorComponent가 render되는 일은 없습니다. 기본 반환값은 false입니다.
 
