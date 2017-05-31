@@ -56,11 +56,20 @@ export default (defaults = {}) => {
           this.setState({ forceUnmount: initializer(this.props, nextProps, this.props.dispatch) })
         }
 
+        renderErrorComponent() {
+          const { props } = ErrorComponent
+          const isJSXComponent = props.prototype instanceof React.Component || props.prototype instanceof React.PureComponent
+          if (isJSXComponent) {
+            return <ErrorComponent />
+          }
+          return ErrorComponent(props)
+        }
+
         render() {
           if (this.props.isLoading || this.state.forceUnmount) {
             return <LoadingComponent />
           } else if (this.props.hasError) {
-            return <ErrorComponent />
+            return this.renderErrorComponent()
           }
           return <DecoratedComponent {...this.props} />
         }

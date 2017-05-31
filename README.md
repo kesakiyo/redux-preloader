@@ -16,7 +16,7 @@ A Higher Order Component that helps to initialize data.
 
 * `LoadingComponent (type: Component)`: preLoading이 true일 때 render될 컴포넌트 입니다. 이 때 값으로는 컴포넌트 이름을 넘겨줘야 합니다.(\<Error \/\> 와 같은 형태가 아니라 Error 와 같은 형태) 만약 값을 넘겨주지 않는다면 빈 화면이 출력됩니다.
 
-* `ErrorComponent (type: Component)`: hasError가 true일 때 render될 컴포넌트 입니다. ```LoadingComponent```와 유사하게 동작합니다. 만약 값을 넘겨주지 않는다면 빈 화면이 출력됩니다.
+* `ErrorComponent (type: Component or Function)`: hasError가 true일 때 render될 컴포넌트를 결정합니다. ```LoadingComponent```와 유사하게 동작합니다. 리액트 컴포넌트대신 함수를 넣는다면 argument로 props를 넘겨줍니다. 이 함수 내에서 render할 ErrorComponent를 결정할 수 있습니다. 만약 아무값도 넘기지 않는다면 빈 화면이 출력됩니다.
 
 * `wrapperDisplayName (type: String)`: 디버깅 할 때 표시될 display에 표시될 이름을 뜻합니다. 만약 값을 넘겨주지 않는다면 'withPreLoader'의 이름으로 표시됩니다.
 
