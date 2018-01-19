@@ -41,3 +41,6 @@ jspm_packages
 
 # Backup Files
 _backup/
+
+# lig files
+lib
