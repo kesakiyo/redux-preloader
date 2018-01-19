@@ -57,20 +57,31 @@ export default (defaults = {}) => {
           this.setState({ forceUnmount: initializer(this.props, nextProps, this.props.dispatch) })
         }
 
-        renderErrorComponent() {
-          const isJSXComponent = ErrorComponent.prototype instanceof React.Component || ErrorComponent.prototype instanceof React.PureComponent
+        isJSXComponent(Component) {
+          return Component.prototype instanceof React.Component || Component.prototype instanceof React.PureComponent
+        }
 
-          if (isJSXComponent) {
-            return <ErrorComponent />
+        renderErrorComponent() {
+          if (this.isJSXComponent(ErrorComponent)) {
+            return <ErrorComponent {...this.props} />
           }
 
           const JSXComponent = ErrorComponent(this.props)
           return <JSXComponent />
         }
 
+        renderLoadingComponent() {
+          if (this.isJSXComponent(LoadingComponent)) {
+            return <LoadingComponent {...this.props} />
+          }
+
+          const JSXComponent = LoadingComponent(this.props);
+          return <JSXComponent />
+        }
+
         render() {
           if (this.props.isLoading || this.state.forceUnmount) {
-            return <LoadingComponent />
+            return this.renderLoadingComponent()
           } else if (this.props.hasError) {
             return this.renderErrorComponent()
           }
