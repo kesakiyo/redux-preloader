@@ -70,7 +70,7 @@ export default (defaults = {}) => {
             return <JSXComponent />;
           }
 
-          return null;
+          return JSXComponent;
         }
 
         render() {
