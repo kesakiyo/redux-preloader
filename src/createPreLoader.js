@@ -79,7 +79,7 @@ export default (defaults = {}) => {
 
         render() {
           if (((!this.hasLoaded || this.props.showLoaderAlways) && this.props.isLoading) || this.state.forceUnmount) {
-            this.hasLoaded = true;
+            if (this.props.isLoading) this.hasLoaded = true;
             return this.renderComponent(LoadingComponent);
           } else if (this.props.hasError) {
             return this.renderComponent(ErrorComponent);
