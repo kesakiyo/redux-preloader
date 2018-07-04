@@ -32,6 +32,7 @@
   },
   "dependencies": {
     "hoist-non-react-statics": "^1.2.0",
+    "lodash.isboolean": "^3.0.3",
     "lodash.isfunction": "^3.0.8"
   }
 }
